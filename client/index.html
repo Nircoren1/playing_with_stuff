@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Microservice Frontend</title>
+</head>
+<body>
+    <h1>Go Microservice Test</h1>
+    <button id="testButton">Test API</button>
+    <p id="apiResponse"></p>
+
+    <script>
+        document.getElementById('testButton').addEventListener('click', function() {
+            fetch('http://localhost:8080/test')
+                .then(response => response.json())
+                .then(data => document.getElementById('apiResponse').innerText = data.message)
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

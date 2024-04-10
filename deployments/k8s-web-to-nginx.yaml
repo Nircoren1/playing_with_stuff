@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-web-to-nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: k8s-web-to-nginx
+  template:
+    metadata:
+      labels:
+        app: k8s-web-to-nginx
+    spec:
+      containers:
+      - name: k8s-web-to-nginx
+        image: nircoren/k8s-web-to-nginx
+        env:
+        # Define the environment variable
+        - name: DATABASE_URL # Notice that the case is different here
+          valueFrom:
+            configMapKeyRef:
+              name: db-conf           # The ConfigMap this value comes from.
+              key: db_url # The key to fetch.
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
